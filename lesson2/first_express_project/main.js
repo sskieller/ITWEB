@@ -5,6 +5,15 @@ const port = 3000,
     app = express(),
     homeController = require('./controllers/homeController');
 
+// Capturing posted data from request body
+app.use(
+    express.urlencoded({
+        extended: false
+    })
+);
+app.use(express.json());
+
+
 // GET route for home page
 app.get("/", (req, res) => {
     res.send("Hello, Universe!");
@@ -23,45 +32,21 @@ app.get("/", (req, res) => {
         console.log(`Express.js server has started and is listening on port: ${port}`);
     });
 
-// Capturing posted data from request body
-app.use(
-    express.urlencoded({
-        extended: false
-    })
-);
-app.use(express.json());
-
 // Routing with Express
-app.post("/contact", (req, res) => {
-    res.send("Contact information submitted successfully");
-});
+app.post("/contact", homeController.contactInfoSubmitted);
+
 // Middleware function for logging request to console
-app.use((req, res, next) => {
-    console.log(`request made to: ${req.url}`);
-    next();
-});
+app.use(homeController.logUrl);
+
 // Middleware function targeted specifically at a certain url, here /items
-app.use("/items", (req, res, next) => {
-    console.log(`request made to /items`);
-
-});
-
+app.use("/items", homeController.sendItems);
 
 // Capturing posted data from request body
-app.post("/", (req, res) => {
-    console.log(req.body);
-    console.log(req.query);
-    res.send("POST Successful!");
-});
+app.post("/", homeController.dataFromBody);
 
 // Route parameters
-app.get("/items/:vegetable", (req, res) => {
-    let veg = req.params.vegetable;
-    res.send(`This is a page for ${veg}`);
-});
+app.get("/items/:vegetable", homeController.sendVegetable);
 
-// Route parameters
-exports.sendVegetable = (res,req) => {
-    let veg = req.params.vegetable;
-    res.send(`This is a page for ${veg}`);
-};
+app.post("/sign_up", homeController.userSignUpProcessor);
+
+app.get("/sign_up", homeController.userSignUpProcessor);

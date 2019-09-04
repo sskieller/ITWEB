@@ -1,3 +1,5 @@
+'use strict';
+
 const fs = require("fs"),
     httpStatus = require("http-status-codes"),
     contentTypes = require("./contentTypes");
@@ -10,7 +12,8 @@ module.exports = {
                     contentTypes.html);
                 res.end("There was an error serving you");
             }
+            
             res.end(data);
-        })
+        });
     }
 };
