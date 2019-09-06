@@ -1,0 +1,17 @@
+<h1><%= title %></h1>
+<p>Students all around: <%= title %></p>
+
+<form action="/addStudent" method="GET">
+    <input type="submit" value="Add Student">
+</form>
+
+<h1>Students in class</h1>
+<% students.forEach(student => { %>
+    <strong> <%= student.studentNo %></strong>
+    <span> 
+        <%= student.studentName %>
+        <%= student.studentSurName %>
+    </span>
+
+    <br />
+<% });%>
