@@ -1,4 +1,28 @@
 <h1><%= title %></h1>
 <p>Add new: <%= title %></p>
 
-<form action=""></form>
+<form action="addStudent" method="POST">
+    <table>
+        <tr>
+            <td>Student Number</td>
+            <td><input type="number" name="studentNo"></td>
+        </tr>
+        <tr>
+            <td>First name</td>
+            <td><input type="text" name="studentName"></td>
+        </tr>
+        <tr>
+            <td>Surname</td>
+            <td><input type="text" name="studentSurname"></td>
+        </tr>
+        <tr>
+            <td>Student grade</td>
+            <td><input type="number" name="studentGrade"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                    <input type="submit" value="Submit Student">
+            </td>
+        </tr>
+    </table>
+</form>

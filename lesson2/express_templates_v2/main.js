@@ -23,6 +23,8 @@ app.use(
 app.use(express.json());
 
 // Using static files with express
+// This allows the application to load images using only the 
+// relative path ~/images/bear.jpg
 app.use(express.static("public"));
 
 

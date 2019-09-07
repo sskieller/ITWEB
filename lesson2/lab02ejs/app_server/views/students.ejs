@@ -1,7 +1,7 @@
 <h1><%= title %></h1>
 <p>Students all around: <%= title %></p>
 
-<form action="/addStudent" method="GET">
+<form action="students/addStudent" action="students" method="GET">
     <input type="submit" value="Add Student">
 </form>
 
@@ -9,8 +9,12 @@
 <% students.forEach(student => { %>
     <strong> <%= student.studentNo %></strong>
     <span> 
+        <label >Student First Name: </label>
         <%= student.studentName %>
-        <%= student.studentSurName %>
+        <label >Student Surname: </label>
+        <%= student.studentSurname %>
+        <label >Student Grade: </label>
+        <strong><%= student.studentGrade %></strong>
     </span>
 
     <br />
