@@ -15,6 +15,7 @@ module.exports.addStudent = (req,res) => {
 };
 
 // POST 
+// Se: https://tanmaysarkar.com/html-form-with-ejs-template-in-nodejs/
 module.exports.addedStudent = function (req,res) {
     console.log("Exports addedStudent speaking")
     var student = {
