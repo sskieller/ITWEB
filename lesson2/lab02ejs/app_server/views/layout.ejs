@@ -7,9 +7,24 @@
 </head>
 
 <body>
-  <div id="nav"><% include partials/navigation %></div>
-  <%- body %>
-  <div id="footer">footer</div>
+  <center>
+      <div id="header">HEADER</div>
+  </center>
+  
+
+  <table>
+    <tr>
+      <td width="30%">
+        <div id="nav"><% include partials/navigation %></div>
+      </td>
+      <td width="20%"></td>
+      <td width="50%"><%- body %></td>
+    </tr>
+  </table>
+  
+  <center>
+      <div id="footer">FOOTER</div>
+  </center>
 </body>
 
 </html>
