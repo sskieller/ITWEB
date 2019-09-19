@@ -1,6 +1,6 @@
 "use strict";
 
-console.log("Start from page 348 in pdf");
+//console.log("Start from page 348 in pdf");
 
 const express = require("express"),
   app = express(),
@@ -10,6 +10,7 @@ const express = require("express"),
   layouts = require("express-ejs-layouts");
 
 const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 mongoose.connect(
   "mongodb://localhost:27017/recipe_db",
   { useNewUrlParser: true }
@@ -46,9 +47,13 @@ app.get("/subscribers", subscriberController.getAllSubscribers,
   });
 
 app.get("/", homeController.index);
+
 app.get("/courses", homeController.showCourses);
-app.get("/contact", homeController.showSignUp);
-app.post("/contact", homeController.postedContactForm);
+
+app.get("/contact", subscriberController.getSubscriptionPage);
+
+app.post("/subscribe", subscriberController.saveSubscriber);
+
 
 app.use(errorController.logErrors);
 app.use(errorController.respondNoResourceFound);
