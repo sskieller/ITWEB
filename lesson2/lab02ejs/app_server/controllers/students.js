@@ -1,12 +1,16 @@
 'use strict'
-module.exports.students = function (req, res) {
-    res.render('students', {
-        title: 'Students',
-        students
-    });
-};
+const Students = require('../models/db');
 
-// GET
+// Get students from database
+module.exports.getAllStudents = (req, res,next) => {
+        Students.find( {}, (error, students) => {
+            if (error) next(error);
+            req.data = students;
+            next();
+        });
+    };
+
+// GET addstudent page
 module.exports.addStudent = (req,res) => {
     console.log("Module Exports addStudent speaking");
     res.render('addStudent', {
@@ -14,38 +18,23 @@ module.exports.addStudent = (req,res) => {
     });
 };
 
-// POST 
-// Se: https://tanmaysarkar.com/html-form-with-ejs-template-in-nodejs/
-module.exports.addedStudent = function (req,res) {
-    console.log("Exports addedStudent speaking")
-    var student = {
-        sNo: req.body.studentNo,
-        fName : req.body.studentName,
-        sName : req.body.studentSurname,
-        sGrade: req.body.studentGrade
-    }
-    console.log(student);
-
-    students.forEach(element => {
-        console.log(`Element:\n ${element.fName} -- ${element}`);
+//module.exports.deleteStudent = (req,res) => {
+//    Students.find( ) // TODO: Add delete functionality
+//};
+// POST Se: https://tanmaysarkar.com/html-form-with-ejs-template-in-nodejs/
+module.exports.addedStudent = (req,res) => {
+    
+    let newStudent = new Students( {
+        studentNo: req.body.studentNo,
+        studentName : req.body.studentName,
+        studentSurname : req.body.studentSurname,
+        studentGrade: req.body.studentGrade
     });
 
-    students.push(student);
-
-
-    // HOW TO ACCESS ANOTHER WEBPAGE THROUGH THIS CONTROLLER?
-    // FOR EXAMPLE THE STUDENT LIST PAGE
-    res.render('students', {
-        title: 'Students',
-        students
+    newStudent.save( (error, result) => {
+        if (error) res.send("error");
+        console.log(`The result of subscriber save: ${result}`);
+        console.log(newStudent.studentName);
+        res.redirect('/students');
     });
-    //showStudents();
-
 };
-
-let students = [{
-    studentNo: 1,
-    studentName: 'Brenda',
-    studentSurname: 'Johnson',
-    studentGrade: 20
-}];

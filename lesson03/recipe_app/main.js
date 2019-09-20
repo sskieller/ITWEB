@@ -13,14 +13,38 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 mongoose.connect(
   "mongodb://localhost:27017/recipe_db",
-  { useNewUrlParser: true }
+  { useNewUrlParser: true, useUnifiedTopology: true }
 );
 mongoose.set("useCreateIndex", true);
 const db = mongoose.connection;
 
+mongoose.connection.on('connected', () => {
+  console.log(`Mongoose connected to ${dbURI}`)
+});
+mongoose.connection.on('error', (error) =>{
+  console.log(`Mongoose connection error: `, error);
+});
+mongoose.connection.on('disconnected', () => {
+  console.log('Mongoose disconnected');
+});
 
-db.once("open", () => {
-  console.log("Succesfully connected to the database using mongoose");
+// For nodemon restart
+process.once('SIGUSR2', () => {
+  gracefulShutdown('nodemon restart', () => {
+    process.kill(process.pid, 'SIGUSR2');
+  });
+});
+// For app termination
+process.once('SIGINT', () => {
+  gracefulShutdown('app termination', () => {
+    process.exit(0);
+  });
+});
+// For Heroku app termination
+process.once('SIGTERM', () => {
+  gracefulShutdown('Heroku app shutdown', () => {
+    process.exit(0);
+  });
 });
 
 app.set("port", process.env.PORT || 3000);
