@@ -6,5 +6,6 @@ const subscriberSchema = mongoose.Schema({
     email: String,
     zipCode: Number
   });
+  
   // Now you need to subscribe to this schema in your DB
   module.exports = mongoose.model("Subscriber", subscriberSchema);

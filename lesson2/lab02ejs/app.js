@@ -8,6 +8,7 @@ const layouts = require('express-ejs-layouts');
 
 const indexRouter = require('./app_server/routes/index');
 const studentRouter = require('./app_server/routes/students');
+const db = require('./app_server/models/db-init');
 
 const app = express();
 
@@ -44,13 +45,3 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-
-
-// <title><%= title %></title>  in layout
-
-//TODO:
-// Add form to new addStudent.ejs (p. 127)
-// create routes for new page
-// check controller for students.js
-// Enable teacher to add student to list (p. 124-126)
-// Make sure the list in students.ejs is showing the new student
