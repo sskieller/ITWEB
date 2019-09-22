@@ -1,63 +1,137 @@
-'use strict'
+"use strict";
 
-const Subscriber = require('../models/subscriber');
+const Subscriber = require("../models/subscriber"),
+  getSubscriberParams = (body) => {
+    return {
+      name: body.name,
+      email: body.email,
+      zipCode: body.zipCode
+    };
+  };
 
-// Sets BL for subscriber list page (CALLBACK)
-//exports.getAllSubscribers = (req,res,next) => {
-//    Subscriber.find( {}, (error, subscribers) => {
-//        if (error) next(error);
-//        req.data = subscribers;
-//        next();
-//    });
-//};
-
-// BL for subscriber list page (PROMISE)
-exports.getAllSubscribers = (req,res) => {
-    // Find all subscribers
+module.exports = {
+  index: (req, res, next) => {
     Subscriber.find({})
-    // Allows the query to return a promise
-    .exec()
+      .then(subscribers => {
+        res.locals.subscribers = subscribers;
+        next();
+      })
+      .catch(error => {
+        console.log(`Error fetching subscribers: ${error.message}`);
+        next(error);
+      });
+  },
 
-    .then( (subscribers) => {
-        res.render("subscribers", {
-            subscribers: subscribers
-        });
-    })
-    .catch( (error) => {
-        console.log(error.message);
-        return [];
-    })
-    .then( () => {
-        console.log("getAllSubscribers promise completed");
-    });
-}
+  indexView: (req, res) => {
+    res.render("subscribers/index",
+      {
+        flashMessages: {
+          success: "Loaded all subscribers"
+        }
+      });
+  },
 
-exports.getSubscriptionPage = (req,res,next) => {
-    res.render("contact");
-};
-
-// Sets BL for subscriber form
-exports.saveSubscriber = (req,res) => {
+  saveSubscriber: (req, res) => {
     let newSubscriber = new Subscriber({
-        name: req.body.name,
-        email: req.body.email,
-        zipCode: req.body.zipCode
+      name: req.body.name,
+      email: req.body.email,
+      zipCode: req.body.zipCode
     });
+    newSubscriber
+      .save()
+      .then(result => {
+        res.render("thanks");
+      })
+      .catch(error => {
+        if (error) res.send(error);
+      });
+  },
+  new: (req, res) => {
+    res.render("subscribers/new");
+  },
 
-    // PROMISE
-    // If a parameter is missing, a spelling error in ejs file might have occurred
-    newSubscriber.save()
-    .then(result => {
-        res.render("thanks")
+  create: (req, res, next) => {
+    let subscriberParams = getSubscriberParams(req.body);
+    Subscriber.create(subscriberParams)
+      .then(subscriber => {
+        req.flash("success", `${subscriber.name}'s subscription created successfully`);
+        res.locals.redirect = "/subscribers";
+        res.locals.subscriber = subscriber;
+        next();
+      })
+      .catch(error => {
+        console.log(`Error saving subscriber: ${error.message}`);
+        res.locals.redirect = "/subscribers/new";
+        req.flash("error", `Failed to create subscription because: ${error.message}`);
+        next();
+      });
+  },
+
+  show: (req, res, next) => {
+    let subscriberId = req.params.id;
+    Subscriber.findById(subscriberId)
+      .then(subscriber => {
+        res.locals.subscriber = subscriber;
+        next();
+      })
+      .catch(error => {
+        console.log(`Error fetching subscriber by ID: ${error.message}`);
+        next(error);
+      });
+  },
+
+  showView: (req, res) => {
+    res.render("subscribers/show");
+  },
+
+  edit: (req, res, next) => {
+    let subscriberId = req.params.id;
+    Subscriber.findById(subscriberId)
+      .then(subscriber => {
+        res.render("subscribers/edit", {
+          subscriber: subscriber
+        });
+      })
+      .catch(error => {
+        console.log(`Error fetching subscriber by ID: ${error.message}`);
+        next(error);
+      });
+  },
+
+  update: (req, res, next) => {
+    let subscriberId = req.params.id,
+      subscriberParams = getSubscriberParams(req.body);
+
+    Subscriber.findByIdAndUpdate(subscriberId, {
+      $set: subscriberParams
     })
-    .catch( (error) => {
-        console.log(error);
-    });
+      .then(subscriber => {
+        res.locals.redirect = `/subscribers/${subscriberId}`;
+        res.locals.subscriber = subscriber;
+        next();
+      })
+      .catch(error => {
+        console.log(`Error updating subscriber by ID: ${error.message}`);
+        next(error);
+      });
+  },
 
-    // (CALLBACK)
-    //newSubscriber.save( (error, result) => {
-    //    if (error) res.send(error);
-    //    console.log(`The result of subscriber save: ${result}`);
-    //    res.render("thanks");
-    //});
+  delete: (req, res, next) => {
+    let subscriberId = req.params.id;
+    Subscriber.findByIdAndRemove(subscriberId)
+      .then(() => {
+        res.locals.redirect = "/subscribers";
+        next();
+      })
+      .catch(error => {
+        console.log(`Error deleting subscriber by ID: ${error.message}`);
+        next();
+      });
+  },
+
+  redirectView: (req, res, next) => {
+    let redirectPath = res.locals.redirect;
+    if (redirectPath !== undefined) res.redirect(redirectPath);
+    else next();
+  }
 };
