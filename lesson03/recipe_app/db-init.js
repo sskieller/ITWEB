@@ -3,8 +3,8 @@ const mongoose = require('mongoose'),
 
 // Using promises
 mongoose.Promise = global.Promise;
-mongoose.connect(
-  dbURI,
+// Either to heroku database or local database
+mongoose.connect(process.env.MONGODB_URI || dbURI,
   { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
