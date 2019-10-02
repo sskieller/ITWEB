@@ -1,0 +1,14 @@
+:host {
+    display: block;
+    margin-bottom: 10px;
+}
+
+img {
+    width: 100%;
+}
+
+.carousel-indicators li {
+    width: 15px;
+    height: 15px;
+    border-radius: 100%;
+}
