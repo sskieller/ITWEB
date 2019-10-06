@@ -1,7 +1,12 @@
 <p>
-    <span *ngFor="let isEmpty of stars"
-        class="material-icons">
-            {{isEmpty ? 'star_border' : 'star_rate'}}
+    <span *ngFor="let star of starss">
+        <ng-container *ngIf="star === 1; then fullStar;"></ng-container>
+        <ng-container *ngIf="star === 2; then halfStar;"></ng-container>
+        <ng-container *ngIf="star === 3; then emptyStar;"></ng-container>
+
+        <ng-template #fullStar><i class="material-icons">star</i></ng-template>
+        <ng-template #halfStar><i class="material-icons">star_half</i></ng-template>
+        <ng-template #emptyStar><i class="material-icons">star_border</i></ng-template>
     </span>
     <span>{{rating}} stars</span>
 </p>

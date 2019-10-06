@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { RouteConfigLoadEnd } from '@angular/router';
 
 
 @Component({
@@ -7,16 +8,25 @@ import { Component, OnInit, Input } from '@angular/core';
 	styleUrls: ['./stars.component.css']
 })
 export class StarsComponent implements OnInit {
-	@Input() count = 5;
+	@Input() count = 4;
 	@Input() rating = 0;
-	stars: boolean[]=[];
+	stars: boolean[] = [];
+	starss: number[] = [];
 	constructor() { }
 
 	ngOnInit() {
-		for (let i = 1; i <= this.count; i++) {
+		for (let i = 0; i <= this.count; i++) {
 			// Checks if enough stars are filled
-			//if () // TODO: Create functionality for half-stars
-			this.stars.push(i > this.rating); 
+			if (Math.floor(this.rating) / i > 1) 
+				this.starss.push(1);
+			else if (Math.floor(this.rating) / i === 1) {
+				if (this.rating - i >= 0.5) 
+					this.starss.push(2);
+				else 
+					this.starss.push(3);
+			}
+			else if (Math.floor(this.rating) / i < 1)
+				this.starss.push(3);
 		}
 	}
 }
