@@ -1,5 +1,13 @@
 'use strict';
 
+// https://github.com/apigee-127/swagger-tools/blob/master/docs/QuickStart.md
+// Guide to this project
+// http://localhost:3000/docs
+// Serves the swagger UI
+// http://localhost:3000/api-docs
+// Serves the swagger document
+
+
 const app = require('connect')(),
     http = require('http'),
     swaggerTools = require('swagger-tools'),
@@ -11,7 +19,7 @@ const options = {
     controllers: './controllers',
     // Conditionally turn on stubs (mock mode)
     useStubs: process.env.NODE_ENV === 'development' ? true : false 
-    // COMMANDLINE TO PROCESS IN POWERSHELL
+    // COMMANDLINE TO PROCESS IN POWERSHELL for VSCODE
     // $env:NODE_ENV="development" ; nodemon main.js
 };
 

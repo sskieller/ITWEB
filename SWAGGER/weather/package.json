@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "connect": "^3.7.0",
-    "swagger-tools": "^0.10.4"
+    "swagger-tools": "^0.10.4",
+    "weather-js": "^2.0.0"
   }
 }
