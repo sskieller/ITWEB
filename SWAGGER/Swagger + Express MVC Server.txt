@@ -1,0 +1,5 @@
+https://itnext.io/wiring-up-an-api-server-with-express-and-swagger-9bffe0a0d6bd
+https://swagger.io/tools/open-source/open-source-integrations/
+https://garywoodfine.com/restful-web-api-node-js/
+http://www.acuriousanimal.com/2018/10/20/express-swagger-doc.html (openAPI)
+https://editor.swagger.io/

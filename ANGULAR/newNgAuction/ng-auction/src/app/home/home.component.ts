@@ -20,7 +20,8 @@ export class HomeComponent implements OnInit {
     ['lg', 4],
     ['xl', 5],
   ]);
-
+  
+  // https://github.com/angular/flex-layout/wiki/MediaObserver
   constructor(private mediaObserver: MediaObserver, // ObservableMedia => MediaObserver since angular 7.0
     private productService: ProductService) { // Dependency injection
     this.products$ = this.productService.getAll(); // Get data about all products
