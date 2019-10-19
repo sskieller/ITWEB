@@ -1,0 +1,16 @@
+@import '~@angular/material/theming';
+
+// Variables and declaration
+$nga-primary: mat-palette($mat-cyan);
+$nga-accent: mat-palette($mat-cyan, A200, A100, A400); // default, lighter, darker hue
+$nga-warn: mat-palette($mat-red); // warning
+
+// Creates the theme
+$nga-theme: mat-light-theme($nga-primary, $nga-accent, $nga-warn);
+
+// Declaration and init for back/foreground
+$nga-background: map-get($nga-theme, background);
+$nga-foreground: map-get($nga-theme, foreground);
+
+// Typography = art of writing
+$nga-typography: mat-typography-config();

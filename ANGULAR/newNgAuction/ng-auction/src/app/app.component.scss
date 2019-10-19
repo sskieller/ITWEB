@@ -1,0 +1,39 @@
+@import '../styles/theme';
+
+:host { // Style component that hosts the AppComponent
+    display: block;
+    height: 100%;
+}
+
+.toolbar { // Applies same background as in the Material card component in this theme
+    background-color: mat-color($nga-background, card);
+    position: relative;
+    box-shadow: 0 1px mat-color($nga-foreground, divider);
+}
+
+.toolbar__logo-title-group { // Styles the logo name
+    position: absolute;
+    right: 50%;
+    left: 50%;
+}
+
+.toolbar__logo { // Styles the logo image
+    height: 32px;
+    margin-right: 16px;
+}
+
+.toolbar__title { // Styles the title
+    color: mat-color($nga-foreground, text);
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.toolbar__icon-button { // Styles the icon foreground
+    color: mat-color($nga-foreground, icon);
+}
+
+.toolbar__shopping-cart-button { // Styles shopping cart button
+    margin-right: 8px;
+}
+

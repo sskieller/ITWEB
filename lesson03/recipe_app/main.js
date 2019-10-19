@@ -3,14 +3,7 @@ const db = require('./db-init');
 // Requires
 const express = require("express"),
   app = express(),
-  router = express.Router(),
-
-  errorController = require("./controllers/errorController"),
-  homeController = require("./controllers/homeController"),
-  subscriberController = require('./controllers/subscriberController'),
-  usersController = require('./controllers/usersController'),
-  coursesController = require('./controllers/coursesController'),
-
+  router = require('./routes/index'),
   layouts = require("express-ejs-layouts"),
   logger = require('morgan'),
   path = require('path'),
@@ -67,7 +60,7 @@ router.use(layouts);
 
 app.use(logger('dev'));
 
-router.use(homeController.logRequestPaths);
+
 
 router.use(
   methodOverride("_method", {
@@ -75,68 +68,7 @@ router.use(
   })
 );
 
-// App routes
 app.use("/", router);
-
-app.get("/subscribers", subscriberController.index,
-  (req, res, next) => {
-    console.log((Date(Date.now)).toString());
-    console.log(req.data);
-    res.render("subscribers", { subscribers: req.data });
-  });
-
-app.get("/", homeController.index);
-app.get("/contact", homeController.getSubscriptionPage);
-
-// USERS
-router.get("/users/login", usersController.login);
-router.post("/users/login", usersController.authenticate);
-router.get("/users/logout", usersController.logout, usersController.redirectView);
-router.get("/users", usersController.index, usersController.indexView);
-router.get("/users/new", usersController.new);
-router.post("/users/create", usersController.validate, 
-usersController.create, usersController.redirectView);
-router.get("/users/:id", usersController.show, usersController.showView);
-router.get("/users/:id/edit", usersController.edit);
-router.put("/users/:id/update", usersController.update, usersController.redirectView);
-router.delete("/users/:id/delete", usersController.delete, usersController.redirectView);
-
-// COURSES
-router.get("/courses", coursesController.index, coursesController.indexView);
-router.get("/courses/new", coursesController.new);
-router.post("/courses/create", coursesController.create, coursesController.redirectView);
-router.get("/courses/:id", coursesController.show, coursesController.showView);
-router.get("/courses/:id/edit", coursesController.edit);
-router.put("/courses/:id/update", coursesController.update, coursesController.redirectView);
-router.delete("/courses/:id/delete", coursesController.delete, coursesController.redirectView);
-
-// SUBSCRIBERS
-router.get("/subscribers",
-subscriberController.index,
-subscriberController.indexView);
-router.get("/subscribers/new",
-subscriberController.new);
-router.post("/subscribers/create", 
-subscriberController.create, 
-subscriberController.redirectView);
-router.get("/subscribers/:id", 
-subscriberController.show, 
-subscriberController.showView);
-router.get("/subscribers/:id/edit",
-subscriberController.edit);
-router.put("/subscribers/:id/update",
-subscriberController.update,
-subscriberController.redirectView);
-router.delete("/subscribers/:id/delete",
-subscriberController.delete,
-subscriberController.redirectView);
-
-router.post("/subscribe", subscriberController.saveSubscriber);
-
-// App open port
-app.use(errorController.logErrors);
-app.use(errorController.respondNoResourceFound);
-app.use(errorController.respondInternalError);
 
 app.listen(app.get("port"), () => {
   console.log(`Server running at http://localhost:${app.get("port")}`);
