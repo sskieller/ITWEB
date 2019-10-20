@@ -11,7 +11,7 @@
 
                 <span class="tile__price-tag"
                     ngClass.xs="tile__price-tag--xs"> <!-- For extra-small viewports, adds styles defined in tile__price-tag--xs -->
-                    {{product.price | currency:'DKr ':'symbol':'.0'}}
+                    {{product.price | currency:'USD':'symbol':'.0'}}
                 </span>
 
                 <div class="tile__thumbnail" [ngStyle]="{'background-image':'url(' + product.imageUrl + ')'}"></div>

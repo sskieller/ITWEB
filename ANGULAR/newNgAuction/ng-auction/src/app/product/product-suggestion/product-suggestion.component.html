@@ -1,0 +1,17 @@
+<div class="info__title" fxLayout="row">
+    More items to consider:
+</div>
+
+<mat-grid-list [cols]="columns$ | async" gutterSize="16px"> <!-- Subscribes to columns$ using async pipe -->
+    <mat-grid-tile class="tile" *ngFor="let product of products"> <!-- For each product, render tile that wraps product info in the anchor tag -->
+        <a class="tile__content"
+            fxLayout
+            fxLayoutAlign="center center"
+            [routerLink]="['/products', product.id]"> <!-- Shows another product if the user clicks tile -->
+            <div class="tile__thumbnail"
+                [ngStyle]="{'background-image':
+                    'url(' + product.imageUrl + ')'}">
+            </div>
+        </a>
+    </mat-grid-tile>
+</mat-grid-list>

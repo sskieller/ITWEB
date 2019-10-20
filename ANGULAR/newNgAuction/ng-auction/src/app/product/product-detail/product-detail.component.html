@@ -1,0 +1,46 @@
+<div class="wrapper"
+    ngClass.lt-md="wrapper--lt-md"
+    ngClass.gt-md="wrapper-->-md"
+    fxLayout="row"
+    fxLayoutAlign="center"
+    fxLayout.xs="column"
+    fxLayoutAlign.xs="center center"> <!-- Centers the content of children horizontally/vertically -->
+
+    <div fxFlex="50%"> <!-- Half the viewport given to product image -->
+        <img class="thumbnail"
+            [attr.alt]="product.title"
+            [attr.src]="product.imageUrl">
+    </div>
+
+    <div fxFlex="50%"> <!-- Half viewport given to title, description, bidding controls -->
+        <div class="info">
+            <h1 class="info__title">
+                {{product?.title}}
+            </h1>
+            <div class="info__description">
+                {{product?.description}}
+            </div>
+            <div class="info__bid">
+                <span>
+                    <span class="info__bid-value"
+                        ngClass.lt-md="info__bid-value--lt-md"> <!-- The last bid amount -->
+                        {{product?.price | currency: 'USD': 'symbol': '.0'}}
+                    </span>
+                    <span class="info__bid-value-decimal"
+                        ngClass.lt-md="info__bid-value-decimal--lt-md">
+                        .00
+                    </span>
+                    <span class="info__bid-label">
+                        LAST BID
+                    </span>
+                </span>
+            </div>
+
+            <button class="info__bid-button"
+                mat-raised-button
+                color="accent"> <!-- uses button from Angular Material -->
+                PLACE BID {{(product?.price + 5) | currency: 'USD': 'symbol': '.0'}} <!-- User can place bids in 5kr intervals -->
+            </button>
+        </div>
+    </div>
+</div>

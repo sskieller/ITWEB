@@ -1,0 +1,27 @@
+<!-- On larger than medium viewports, shows product detail on right and suggested products on left -->
+<div class="wrapper"
+    fxLayout="column"
+    fxLayout.gt-md="row-reverse">
+
+    <!-- fxFlex=auto:       takes enough space to render component but not more
+      -- ngIf:              if product$ emitted a value, puts it in the local template variable product
+      -- [product]=product: passes product object to <nga-product-detail> for rendering  
+      -->
+    <nga-product-detail
+        fxFlex="auto"
+        fxFlex.gt-md="65%"
+        *ngIf="product$ | async as product"
+        [product]="product">
+    </nga-product-detail>
+
+    <!-- ngIf:                  if suggestedProducts$ emit value, puts it in local template variable products
+      -- [products]=products:   passes products to <nga-product-suggestion> for rendering
+      -->
+    <nga-product-suggestion
+        fxFlex="auto" 
+        fxFlex.gt-md="35%"
+        *ngIf="suggestedProducts$ | async as products"
+        [products]="products">
+    </nga-product-suggestion>
+
+</div>

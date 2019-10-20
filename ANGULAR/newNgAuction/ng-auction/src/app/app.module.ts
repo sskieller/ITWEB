@@ -18,10 +18,12 @@ import { ProductService} from './shared/services';
   imports: [
     BrowserModule,
     AppRoutingModule,
+
     MatButtonModule,
     MatIconModule,
     MatToolbarModule,
     FlexLayoutModule,
+    
     HttpClientModule
   ],
   providers: [
