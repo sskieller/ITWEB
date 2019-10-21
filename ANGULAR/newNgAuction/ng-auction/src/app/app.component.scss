@@ -5,6 +5,10 @@
     height: 100%;
 }
 
+mat-sidenav-container {
+    height: 100%;
+}
+
 .toolbar { // Applies same background as in the Material card component in this theme
     background-color: mat-color($nga-background, card);
     position: relative;
