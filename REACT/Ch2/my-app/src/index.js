@@ -24,7 +24,8 @@ class Post extends Component {
             className: "postBody"
           },
           this.props.content
-        )
+        ),
+        this.props.children
       )
     );
   }
@@ -38,7 +39,7 @@ Post.propTypes = {
 
 class Comment extends Component {
   render() {
-      console.log('yo');
+    console.log("yo");
     return React.createElement(
       "div",
       {
@@ -52,7 +53,9 @@ class Comment extends Component {
         this.props.user,
         React.createElement(
           "span",
-          { className: "commentContent" },
+          {
+            className: "commentContent"
+          },
           this.props.content
         )
       )
@@ -61,9 +64,9 @@ class Comment extends Component {
 }
 
 Comment.propTypes = {
-    id: PropTypes.number.isRequired,
-    content: PropTypes.string.isRequired,
-    user: PropTypes.string.isRequired
+  id: PropTypes.number.isRequired,
+  content: PropTypes.string.isRequired,
+  user: PropTypes.string.isRequired
 };
 
 const App = React.createElement(
@@ -71,16 +74,17 @@ const App = React.createElement(
   {
     id: 1,
     content: " said: This is a post!",
-    user: "Bob"
+    user: "mark"
   },
   React.createElement(Comment, {
     id: 2,
-    user: "mark",
-    content: " commented: wow! what is this.."
+    user: "bob",
+    content: " commented: wow! how cool!"
   })
 );
 
 render(App, node);
+
 
 /**
  * 1st listing
