@@ -1,4 +1,4 @@
-"use strict"; console.log("Start from page 359 in pdf");
+"use strict"; 
 const db = require('./db-init');
 // Requires
 const express = require("express"),
