@@ -1,26 +1,38 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {connect} from 'react-redux';
+import Counter from './Counter';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// Map Redux state to component props (store updates)
+function mapStateToProps(state) {
+  return {
+    countValue: state.count
+  };
 }
 
-export default App;
+// Action (allowing component access to action creators and actions)
+var increaseAction = {type: "increase"};
+let decreaseAction = {type: "decrease"};
+
+// map redux axtions to component props (Allow access to the inc/dec functions)
+function mapDispatchToProps(dispatch) {
+  return {
+    increaseCount: function() {
+      console.log("Dispatching increaseAction");
+      return dispatch(increaseAction);
+    },
+    decreaseCount: function() {
+      console.log("Dispatching decreaseAction");
+      return dispatch(decreaseAction);
+    }
+  };
+}
+
+
+// The HOC (Higher Order Component) (Adds both map-functions into Counter component)
+// Counter component gets access to: increaseCount, decreaseCount, countValue
+let connectedComponent = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Counter);
+
+export default connectedComponent;
